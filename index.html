@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<div id="app">
+        <div id="header" :style="{backgroundColor:this.headerBg}">TO DO IT</div>
+        <div class="app-menu" @click="changeleft">
+            <div class="mstrip"></div>
+            <div class="mstrip"></div>
+            <div class="mstrip"></div>
+        </div>
+    <todo-list v-if="this.list" :mytodo="this.todo" @clear="todoClear" @finish="todoFinish"></todo-list>
+    <completed-list v-else :mydone="this.done" @clear="clear"></completed-list>
+    <menu-content v-show="show" @what-show="whatShow"></menu-content>
+    <cover v-show="showcover" @to-show="changeleft"></cover>
+    <add-content @to-add="add"></add-content>
+    <menu-card :iswhat="isWhat" v-show="this.menuCardShow" @change-color="changeColor" style="z-index:3"></menu-card>
+</div>
+
+<!--<script type="text/x-template" id="add-content">-->
+<script type="text/x-template" id="add-content">
+    <div>
+        <transition name="rotate">
+            <div class="addcontent" v-show="showcontent">
+                <input type="text" v-model.trim="content" placeholder="添加新的任务..." maxlength="64" @keyup.enter="add">
+            </div>
+        </transition>
+        <div class="btnbox">
+            <button class="addBtn" @click="showbtn" :style="{transform:transform}">
+                <i>+</i>
+            </button>
+            <button class="Okbtn" :style="{top:mytop+'px',backgroundColor:bg}" @click="add"><span>确定</span></button>
+        </div>
+    </div>
+</script>
+
+<script type="text/x-template" id="menu-content">
+    <transition name="cont">
+        <div class="menu-content">
+            <ul class="menu-list">
+                <li class="menu-item" v-for="(item,index) in items" @click="whatShow(index)">{{item.message}}</li>
+            </ul>
+        </div>
+    </transition>
+</script>
+
+<script type="text/x-template" id="todo-list">
+    <ul>
+        <div class="task-item" v-for="(item,index) in todo">
+            <span>{{item}}</span>
+            <div class="clear" @click="clear(index)">
+                <i class="iconfont icon-shanchu">删除</i>
+            </div>
+            <div class="finish" @click="finish(index)">
+                <i class="iconfont icon-dui">完成</i>
+            </div>
+        </div>
+
+    </ul>
+</script>
+
+<script type="text/x-template" id="completed-list">
+    <ul class="completed-list">
+        <div class="completed-item" v-for="(item,index) in done">
+            <span>{{item}}</span>
+            <div class="finish">
+                <i class="iconfont icon-shanchu" @click="clear(index)">删除</i>
+            </div>
+        </div>
+    </ul>
+</script>
+
+<script type="text/x-template" id="menu-card">
+    <transition name="toup">
+        <div class="menu-card">
+            <ul class="selet-color-panel" v-if="iswhat">
+                <li class="color-item" v-for="(item,index) in items" @click="changeColor(item.bg1,index)">
+                    <span>{{item.message}}</span>
+                    <div class="color-block" :class="{shake:item.shake}">
+                        <div :style="{backgroundColor:item.bg1}"></div>
+                        <div :style="{backgroundColor:item.bg2}"></div>
+                    </div>
+                </li>
+            </ul>
+            <ul class="selet-color-panel" v-else>
+                <p><b>药丸清单，一个专治拖延症患者的应用。</b><br>
+                    当前为测试版本，持续更新中...
+                    <br><br><br>
+                    @2018 <a href="http://biaoyansu.com">个人喜欢的学习网站</a>
+                </p>
+            </ul>
+        </div>
+    </transition>
+</script>
+
+
+<script src="../lib/vue.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>
