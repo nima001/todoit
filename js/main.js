@@ -144,13 +144,6 @@ var menuCard = {
     methods: {
         changeColor: function(val,index) {
             this.$emit("change-color", val);//改变head颜色
-            for(var i = 0;i<this.items.length;i+=1){		//添加一个上下摆小动画
-                if(i == index){
-                    this.items[index].shake = true;
-                }else{
-                    this.items[i].shake = false;
-                }
-            }
         }
     }
 }
@@ -171,6 +164,8 @@ new Vue({
         left: -260
         ,
         list:true//切换事件
+        ,
+        list1:true
         ,
         isWhat:true
         ,
@@ -214,25 +209,31 @@ new Vue({
             switch (index) {
                 case 0:
                     this.list = true;
+                    this.list1=false;
                     this.changeleft();
                     this.showcover=false;
                     this.menuCardShow = false;
                     break;
                 case 1:
                     this.list = false;
+                    this.list1=true;
                     this.changeleft();
                     this.showcover=false;
                     this.menuCardShow = false;
                     break;
                 case 2:
-                    this.left = -260;
+                    this.list=false;
+                    this.list1=false;
+                    this.changeleft();
                     this.show=false;
                     this.isWhat = true;
                     this.showcover=true;
                     this.menuCardShow = true;
                     break;
                 case 3:
-                    this.left = -260;
+                    this.list=false;
+                    this.list1=false;
+                    this.changeleft();
                     this.show=false;
                     this.isWhat = false;
                     this.showcover=true;

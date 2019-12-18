@@ -17,9 +17,9 @@
             <div class="mstrip"></div>
         </div>
     <todo-list v-if="this.list" :mytodo="this.todo" @clear="todoClear" @finish="todoFinish"></todo-list>
-    <completed-list v-else :mydone="this.done" @clear="clear"></completed-list>
+    <completed-list v-if="this.list1" v-else :mydone="this.done" @clear="clear"></completed-list>
     <menu-content v-show="show" @what-show="whatShow"></menu-content>
-    <cover v-show="showcover" @to-show="changeleft"></cover>
+    <cover v-show="showcover"></cover>
     <add-content @to-add="add"></add-content>
     <menu-card :iswhat="isWhat" v-show="this.menuCardShow" @change-color="changeColor" style="z-index:3"></menu-card>
 </div>
@@ -55,14 +55,13 @@
     <ul>
         <div class="task-item" v-for="(item,index) in todo">
             <span>{{item}}</span>
-            <div class="clear" @click="clear(index)">
+            <div class="clear" @click="clear(index)" >
                 <i class="iconfont icon-shanchu">删除</i>
             </div>
             <div class="finish" @click="finish(index)">
                 <i class="iconfont icon-dui">完成</i>
             </div>
         </div>
-
     </ul>
 </script>
 
@@ -83,10 +82,6 @@
             <ul class="selet-color-panel" v-if="iswhat">
                 <li class="color-item" v-for="(item,index) in items" @click="changeColor(item.bg1,index)">
                     <span>{{item.message}}</span>
-                    <div class="color-block" :class="{shake:item.shake}">
-                        <div :style="{backgroundColor:item.bg1}"></div>
-                        <div :style="{backgroundColor:item.bg2}"></div>
-                    </div>
                 </li>
             </ul>
             <ul class="selet-color-panel" v-else>
